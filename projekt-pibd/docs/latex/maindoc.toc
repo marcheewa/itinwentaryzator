@@ -1,0 +1,9 @@
+\select@language {polish}
+\select@language {polish}
+\contentsline {chapter}{Spis tre\'sci}{1}{section*.1}
+\cftpagenumbersoff {chapter}
+\contentsline {chapter}{Streszczenie}{1}{section*.3}
+\cftpagenumberson {chapter}
+\contentsline {chapter}{Spis tabel}{2}{chapter*.5}
+\contentsline {chapter}{Spis rysunk\'ow}{3}{chapter*.6}
+\contentsline {chapter}{Za\IeC {\l }\k aczniki}{4}{section*.7}

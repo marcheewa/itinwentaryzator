@@ -1,0 +1,149 @@
+\documentclass[12pt,a4paper,oneside]{mwrep}
+\linespread{1,3} % intrerlinia 1,5
+\usepackage[T1]{fontenc}
+% \usepackage{cmap}
+\usepackage[cp1250]{inputenc}
+\usepackage[english,polish]{babel}
+\selectlanguage{polish}
+\usepackage{lmodern}
+\usepackage{times} % czcionka Times New Roman
+\usepackage[top=2.5cm, bottom=2.5cm, left=4cm, right=2cm]{geometry} % Marginesy
+\usepackage[pdftex]{hyperref}
+\hypersetup{
+	pdfpagelabels = true,
+	linkcolor = blue,
+	colorlinks = false,
+	hidelinks,
+	unicode	= true,
+	pdfauthor = Mariusz Madej i Leszek Marciniak,
+	pdftitle = {System inwentaryzacyjny sprz\k{e}tu i oprogramowania komputerowego}
+}
+
+\usepackage{amsmath}
+\usepackage[addtotoc]{abstract}
+\usepackage{color}
+\usepackage{ccaption}
+\usepackage[sort,longnamesfirst]{natbib} % cytowanie wielu autorów 
+\usepackage[titles]{tocloft}
+\usepackage[toc,page,titletoc]{appendix}
+\usepackage{etoolbox}
+\usepackage{graphicx} % wstawianie ilustracji
+\usepackage{enumerate} % listy numerowane
+% \usepackage{enumitem} % listy wypunktowane
+\usepackage{fancyhdr}
+\usepackage{bookmark}
+\usepackage{siunitx} % wyrównywanie liczb w tabeli
+
+\input glyphtounicode.tex 
+% \input glyphtounicode-cmr.tex 
+\pdfgentounicode=1 
+
+\captionstyle{\raggedright}
+\captionnamefont{\bfseries\footnotesize}
+\captiontitlefont{\itshape\footnotesize}
+\clubpenalty=10000 % brak sierot
+\widowpenalty=10000 % brak wdów
+\brokenpenalty=10000 % nie ³amie wyrazów miêdzy stronami
+
+\patchcmd{\bibsetup}{\interlinepenalty=5000}{\interlinepenalty=10000}{}{}
+
+
+\setcounter{secnumdepth}{3}
+
+\makeatletter
+\renewcommand*\l@part[2]{%
+  \ifnum \c@tocdepth >-2\relax
+    \addpenalty{-\@highpenalty}%
+    \addvspace{2.25em \@plus\p@}%
+    \setlength\@tempdima{2em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      {\leavevmode
+       \hspace*{\fill}\centering\large\bfseries #1\hspace*{\fill}\llap{#2}}\par
+       \nobreak
+         \global\@nobreaktrue
+         \everypar{\global\@nobreakfalse\everypar{}}%
+    \endgroup
+  \fi}
+\makeatother
+
+
+\raggedbottom  
+
+\begin{document}
+\renewcommand*{\tablename}{Tabela}
+\renewcommand*{\listtablename}{Spis tabel}
+\renewcommand{\appendixpagename}{Za³¹czniki}
+\renewcommand{\appendixtocname}{Za³¹czniki}
+
+\let\plainappendixpage\appendixpage
+\makeatletter
+\renewcommand{\appendixpage}{%
+  \begingroup
+  \let\ps@plain\ps@empty
+  \plainappendixpage
+  \endgroup}
+\makeatother
+
+\numberwithin{figure}{section} % numerowanie rysunków wg numerowania rozdzia³ów
+\numberwithin{table}{section}  % numerowanie tabel wg numerowania rozdzia³ów
+
+\cftpagenumbersoff{part}
+\renewcommand\cftpartnumwidth{2em}
+\renewcommand\cftpartpresnum{\scshape}
+\renewcommand\cftchappresnum{\chaptername\space}
+\setlength{\cftchapnumwidth}{2,25cm}
+
+\include{cover} % Strona tytu³owa
+
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+
+\phantomsection
+\addcontentsline{toc}{chapter}{Spis treœci}
+\tableofcontents
+
+%\makeatletter
+%\renewenvironment{abstract}{%
+%\newpage\flushbottom
+%\thispagestyle{empty}
+%  \if@twocolumn
+%    \section*{\abstractname}%
+%  \else
+%    \small
+%    \begin{center}%
+%      {\bfseries \abstractname\vspace{-.5em}\vspace{\z@}}%
+%    \end{center}%
+%    \quotation
+%  \fi}
+%  {\if@twocolumn\else\endquotation\fi}
+%\makeatother
+
+\addtocontents{toc}{\cftpagenumbersoff{chapter}}
+ % Streszczenie pracy
+\phantomsection
+\addcontentsline{toc}{chapter}{Streszczenie}
+\addtocontents{toc}{\cftpagenumberson{chapter}}
+
+	
+%\include{intro} % Wstêp
+%
+%\include{chap1} % Rozdzia³ 1
+%\include{chap2} % Rozdzia³ 2
+%\include{chap3} % Rozdzia³ 3
+%\include{chap4} % Rozdzia³ 4
+%\include{chap5} % Rozdzia³ 5
+%\include{chap6} % Rozdzia³ 6
+
+\bookmarksetup{startatroot}
+
+\clearpage
+
+\phantomsection
+\bibliography{bibliografia} % plik bibliografii
+\bibliographystyle{plain}
+\listoftables % Spis tabel
+\listoffigures % Spis rysunków
+\appendixpage
+\include{appendix}
+\end{document}
