@@ -1,2 +1,2 @@
 # sisiok
-System inwentaryzacyjny sprzętu i oprogramowania komputerowego
+System inwentaryzacji sprzętu i oprogramowania komputerowego
