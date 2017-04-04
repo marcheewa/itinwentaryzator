@@ -1,2 +1,2 @@
-# main
-Repozytorium z programami
+# sisiok
+System inwentaryzacyjny sprzętu i oprogramowania komputerowego
