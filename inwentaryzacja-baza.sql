@@ -55,7 +55,9 @@ CREATE TABLE `computers` (
   `os_id` int(2) DEFAULT NULL,
   PRIMARY KEY (`computer_id`),
   KEY `computer_model_id` (`computer_model_id`),
-  CONSTRAINT `computers_ibfk_1` FOREIGN KEY (`computer_model_id`) REFERENCES `computer_models` (`computer_model_id`)
+  KEY `os_id` (`os_id`),
+  CONSTRAINT `computers_ibfk_1` FOREIGN KEY (`computer_model_id`) REFERENCES `computer_models` (`computer_model_id`),
+  CONSTRAINT `computers_ibfk_2` FOREIGN KEY (`os_id`) REFERENCES `osnames` (`os_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -66,6 +68,87 @@ CREATE TABLE `computers` (
 LOCK TABLES `computers` WRITE;
 /*!40000 ALTER TABLE `computers` DISABLE KEYS */;
 /*!40000 ALTER TABLE `computers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `computers_software`
+--
+
+DROP TABLE IF EXISTS `computers_software`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `computers_software` (
+  `id` varchar(3) COLLATE utf8_polish_ci DEFAULT NULL,
+  `computer_id` int(3) DEFAULT NULL,
+  `software_id` int(3) DEFAULT NULL,
+  KEY `computer_id` (`computer_id`),
+  KEY `software_id` (`software_id`),
+  CONSTRAINT `computers_software_ibfk_1` FOREIGN KEY (`computer_id`) REFERENCES `computers` (`computer_id`),
+  CONSTRAINT `computers_software_ibfk_2` FOREIGN KEY (`software_id`) REFERENCES `software` (`software_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `computers_software`
+--
+
+LOCK TABLES `computers_software` WRITE;
+/*!40000 ALTER TABLE `computers_software` DISABLE KEYS */;
+/*!40000 ALTER TABLE `computers_software` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `licences`
+--
+
+DROP TABLE IF EXISTS `licences`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `licences` (
+  `licence_id` int(3) NOT NULL,
+  `purchased` date DEFAULT NULL,
+  `licence_type` varchar(12) COLLATE utf8_polish_ci DEFAULT NULL,
+  `expiration` date DEFAULT NULL,
+  `serial_nr` varchar(50) COLLATE utf8_polish_ci DEFAULT NULL,
+  `inventory_nr` varchar(20) COLLATE utf8_polish_ci DEFAULT NULL,
+  PRIMARY KEY (`licence_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `licences`
+--
+
+LOCK TABLES `licences` WRITE;
+/*!40000 ALTER TABLE `licences` DISABLE KEYS */;
+/*!40000 ALTER TABLE `licences` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `licences_software`
+--
+
+DROP TABLE IF EXISTS `licences_software`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `licences_software` (
+  `id` int(3) DEFAULT NULL,
+  `software_id` int(3) DEFAULT NULL,
+  `licence_id` int(3) DEFAULT NULL,
+  KEY `software_id` (`software_id`),
+  KEY `licence_id` (`licence_id`),
+  CONSTRAINT `licences_software_ibfk_1` FOREIGN KEY (`software_id`) REFERENCES `software` (`software_id`),
+  CONSTRAINT `licences_software_ibfk_2` FOREIGN KEY (`licence_id`) REFERENCES `licences` (`licence_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `licences_software`
+--
+
+LOCK TABLES `licences_software` WRITE;
+/*!40000 ALTER TABLE `licences_software` DISABLE KEYS */;
+/*!40000 ALTER TABLE `licences_software` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -166,6 +249,30 @@ LOCK TABLES `osversions` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `software`
+--
+
+DROP TABLE IF EXISTS `software`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `software` (
+  `software_id` int(3) NOT NULL,
+  `software_name` varchar(30) COLLATE utf8_polish_ci DEFAULT NULL,
+  `software_version` varchar(10) COLLATE utf8_polish_ci DEFAULT NULL,
+  PRIMARY KEY (`software_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `software`
+--
+
+LOCK TABLES `software` WRITE;
+/*!40000 ALTER TABLE `software` DISABLE KEYS */;
+/*!40000 ALTER TABLE `software` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user_assets`
 --
 
@@ -235,4 +342,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-13 12:22:45
+-- Dump completed on 2017-04-13 17:54:03
