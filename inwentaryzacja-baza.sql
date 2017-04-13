@@ -101,10 +101,11 @@ DROP TABLE IF EXISTS `monitors`;
 CREATE TABLE `monitors` (
   `monitor_id` int(3) NOT NULL AUTO_INCREMENT,
   `asset_id` varchar(10) COLLATE utf8_polish_ci NOT NULL,
-  `monitor_name` varchar(20) COLLATE utf8_polish_ci DEFAULT NULL,
   `monitor_model_id` int(3) DEFAULT NULL,
   `serial_number` varchar(30) COLLATE utf8_polish_ci NOT NULL,
-  PRIMARY KEY (`monitor_id`)
+  PRIMARY KEY (`monitor_id`),
+  KEY `monitor_model_id` (`monitor_model_id`),
+  CONSTRAINT `monitors_ibfk_1` FOREIGN KEY (`monitor_model_id`) REFERENCES `monitor_models` (`monitor_model_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -165,6 +166,37 @@ LOCK TABLES `osversions` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user_assets`
+--
+
+DROP TABLE IF EXISTS `user_assets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_assets` (
+  `id` int(3) NOT NULL,
+  `user_id` int(5) DEFAULT NULL,
+  `computer_id` int(3) DEFAULT NULL,
+  `monitor_id` int(3) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `computer_id` (`computer_id`),
+  KEY `monitor_id` (`monitor_id`),
+  CONSTRAINT `user_assets_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  CONSTRAINT `user_assets_ibfk_2` FOREIGN KEY (`computer_id`) REFERENCES `computers` (`computer_id`),
+  CONSTRAINT `user_assets_ibfk_3` FOREIGN KEY (`monitor_id`) REFERENCES `monitors` (`monitor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_assets`
+--
+
+LOCK TABLES `user_assets` WRITE;
+/*!40000 ALTER TABLE `user_assets` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_assets` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users`
 --
 
@@ -203,4 +235,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-13 11:50:27
+-- Dump completed on 2017-04-13 12:22:45
