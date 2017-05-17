@@ -1,0 +1,3 @@
+<?php
+//widok tabeli komputerów
+?>
