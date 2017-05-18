@@ -1,5 +1,5 @@
 <?php
-include "menu.php";
+include "menu.html";
 ?>
 <?php
 

@@ -10,11 +10,11 @@
 		//Sprawdź poprawność nickname'a
 		$nick = $_POST['nick'];
 		
-		//Sprawdzenie długości nicka
+		//Sprawdzenie długości loginu
 		if ((strlen($nick)<3) || (strlen($nick)>20))
 		{
 			$wszystko_OK=false;
-			$_SESSION['e_nick']="Nazwa użytkownika musi posiadać od 3 do 20 znaków!";
+			$_SESSION['e_nick']="Nazwa użytkownika musi mieć od 3 do 20 znaków!";
 		}
 		
 		if (ctype_alnum($nick)==false)
@@ -51,7 +51,7 @@
 
 		$haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
 		
-		//Czy zaakceptowano regulamin?
+		//Sprawdza akceptację regulaminu:
 		if (!isset($_POST['regulamin']))
 		{
 			$wszystko_OK=false;
@@ -71,7 +71,7 @@
 			$_SESSION['e_bot']="Potwierdź, że nie jesteś botem!";
 		}		
 		
-		//Zapamiętaj wprowadzone dane
+		//Zapamiętywanie wprowadzonych danych:
 		$_SESSION['fr_nick'] = $nick;
 		$_SESSION['fr_email'] = $email;
 		$_SESSION['fr_haslo1'] = $haslo1;
@@ -102,7 +102,7 @@
 					$_SESSION['e_email']="Istnieje już konto przypisane do tego adresu e-mail!";
 				}		
 
-				//Czy nick jest już zarezerwowany?
+				//Czy login jest już zarezerwowany?
 				$rezultat = $polaczenie->query("SELECT id FROM uzytkownicy WHERE user='$nick'");
 				
 				if (!$rezultat) throw new Exception($polaczenie->error);
@@ -118,7 +118,7 @@
 				{
 					//Dodanie nowego użytkownika do bazy
 					
-					if ($polaczenie->query("INSERT INTO uzytkownicy VALUES (NULL, '$nick', '$haslo_hash', '$email')"))
+					if ($polaczenie->query("INSERT INTO uzytkownicy (user, pass, email) VALUES ('$nick', '$haslo_hash', '$email')"))
 					{
 						$_SESSION['udanarejestracja']=true;
 						header('Location: witamy.php');
@@ -137,7 +137,7 @@
 		catch(Exception $e)
 		{
 			echo '<span style="color:red;">Błąd serwera! Przepraszamy za niedogodności i prosimy o rejestrację w innym terminie!</span>';
-			echo '<br />Informacja dla deweloperów: '.$e;
+			echo '<br />Informacja dla dewelo: '.$e;
 		}
 		
 	}
