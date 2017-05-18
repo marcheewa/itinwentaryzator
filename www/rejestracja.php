@@ -14,13 +14,13 @@
 		if ((strlen($nick)<3) || (strlen($nick)>20))
 		{
 			$wszystko_OK=false;
-			$_SESSION['e_nick']="Nick musi posiadać od 3 do 20 znaków!";
+			$_SESSION['e_nick']="Nazwa użytkownika musi posiadać od 3 do 20 znaków!";
 		}
 		
 		if (ctype_alnum($nick)==false)
 		{
 			$wszystko_OK=false;
-			$_SESSION['e_nick']="Nick może składać się tylko z liter i cyfr (bez polskich znaków)";
+			$_SESSION['e_nick']="Nazwa użytkownika może składać się tylko z liter i cyfr (bez polskich znaków)";
 		}
 		
 		// Sprawdź poprawność adresu email
@@ -40,7 +40,7 @@
 		if ((strlen($haslo1)<8) || (strlen($haslo1)>20))
 		{
 			$wszystko_OK=false;
-			$_SESSION['e_haslo']="Hasło musi posiadać od 8 do 20 znaków!";
+			$_SESSION['e_haslo']="Hasło musi mieć od 8 do 20 znaków!";
 		}
 		
 		if ($haslo1!=$haslo2)
@@ -58,7 +58,7 @@
 			$_SESSION['e_regulamin']="Potwierdź akceptację regulaminu!";
 		}				
 		
-		//Bot or not? Oto jest pytanie!
+		//Uwieżytelnianie Captcha:
 		$sekret = "6LfKPiEUAAAAAPTorcmZ6xHpoKZjHfoXSzPy6PPn";
 		
 		$sprawdz = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$sekret.'&response='.$_POST['g-recaptcha-response']);
@@ -116,7 +116,7 @@
 				
 				if ($wszystko_OK==true)
 				{
-					//Hurra, wszystkie testy zaliczone, dodajemy gracza do bazy
+					//Dodanie nowego użytkownika do bazy
 					
 					if ($polaczenie->query("INSERT INTO uzytkownicy VALUES (NULL, '$nick', '$haslo_hash', '$email')"))
 					{
@@ -137,7 +137,7 @@
 		catch(Exception $e)
 		{
 			echo '<span style="color:red;">Błąd serwera! Przepraszamy za niedogodności i prosimy o rejestrację w innym terminie!</span>';
-			echo '<br />Informacja developerska: '.$e;
+			echo '<br />Informacja dla deweloperów: '.$e;
 		}
 		
 	}
